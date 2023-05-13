@@ -44,7 +44,7 @@ async function insertOp(client, databaseAndCollection, name) {
 }
 
 app.use(bodyParser.urlencoded({extended:false})); // for getting variables from form
-app.post("/confirm", async (request, response) => {
+app.post("/confirm", (request, response) => {
     const variables = {
         name: ""
     }

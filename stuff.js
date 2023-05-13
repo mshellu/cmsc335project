@@ -13,7 +13,7 @@ const databaseAndCollection = {db: process.env.MONGO_DB_NAME, collection: proces
 const uri = `mongodb+srv://${userName}:${password}@cluster0.29ulgrq.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-app.set("templates", path.resolve(__dirname, "templates"));
+app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
 
 async function postJSON() {

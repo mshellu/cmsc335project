@@ -31,8 +31,8 @@ app.get("/", function(request, response){
     response.render("index"); 
 }); 
 
-async function insertOp(name) {
-    const op = {name: name}
+async function insertOp(client, databaseAndCollection, name) {
+    let op = {name: name}
     try {
         await client.connect();
         const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(op);
@@ -52,7 +52,7 @@ app.post("/confirm", async (request, response) => {
     let {ops} = request.body;
     console.log("operator got: " + ops);
     variables.name = ops;
-    insertOp(ops);
+    insertOp(client,databaseAndCollection,ops);
 
     response.render("confirm", variables);
 })

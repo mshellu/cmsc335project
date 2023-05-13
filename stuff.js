@@ -37,7 +37,7 @@ async function insertOp(client, databaseAndCollection, name) {
     try {
         await client.connect();
         console.log("client connected");
-        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(name);
+        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(op);
         console.log("finished adding to database, result is " + result);
         } catch (e) {
         console.error(e);

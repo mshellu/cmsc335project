@@ -31,6 +31,18 @@ app.get("/", function(request, response){
     response.render("index"); 
 }); 
 
+app.use(bodyParser.urlencoded({extended:false})); // for getting variables from form
+app.get("/confirm", (request, reponse) => {
+    const variables = {
+        name: ""
+    }
+
+    let {ops} = request.body;
+    console.log("operator got: " + ops);
+    variables.name = ops;
+    response.render("confirm", variables);
+})
+
 
 app.listen(portNumber);
 

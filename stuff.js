@@ -24,7 +24,11 @@ async function postJSON() {
     } catch (error) {
       console.error("Error:", error);
     }
-  }
+}
+//app.set("view engine", "ejs"); 
+app.get("/", function(request, response){ 
+    response.render("index"); 
+}); 
   
 
 app.listen(portNumber);

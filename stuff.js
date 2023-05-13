@@ -56,7 +56,7 @@ app.post("/confirm", async(request, response) => {
     console.log("operator got: " + ops);
     variables.name = ops;
     await insertOp(client,databaseAndCollection,ops);
-    
+
     response.render("confirm", variables);
 })
 
@@ -64,4 +64,4 @@ app.post("/confirm", async(request, response) => {
 app.listen(portNumber);
 
 // for testing (below)
-postJSON();
+//postJSON();

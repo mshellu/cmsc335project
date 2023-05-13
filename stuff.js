@@ -32,7 +32,7 @@ app.get("/", function(request, response){
 }); 
 
 app.use(bodyParser.urlencoded({extended:false})); // for getting variables from form
-app.post("/confirm", (request, reponse) => {
+app.post("/confirm", (request, response) => {
     const variables = {
         name: ""
     }

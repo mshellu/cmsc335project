@@ -32,15 +32,15 @@ app.get("/", function(request, response){
 }); 
 
 async function insertOp(client, databaseAndCollection, name) {
-    let op = {name: name}
-    try {
-        await client.connect();
-        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(op);
-    } catch (e) {
+    //let op = {name: name}
+    //try {
+        //await client.connect();
+        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(name);
+    /*} catch (e) {
         console.error(e);
     } finally {
         await client.close();
-    }
+    }*/
 }
 
 app.use(bodyParser.urlencoded({extended:false})); // for getting variables from form

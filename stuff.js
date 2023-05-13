@@ -9,7 +9,7 @@ require("dotenv").config({ path: path.resolve(__dirname, '.env') })
 const userName = process.env.MONGO_DB_USERNAME;
 const password = process.env.MONGO_DB_PASSWORD;
 
-const databaseAndCollection = {db: process.env.MONGO_DB_NAME, collection: process.env.MONGO_COLLECTION};
+const databaseAndCollection = {db: "CMSC335_PROJ_DB", collection: "cmsc335FinalProj"};
 const uri = `mongodb+srv://${userName}:${password}@cluster0.29ulgrq.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 

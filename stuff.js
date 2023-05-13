@@ -31,6 +31,18 @@ app.get("/", function(request, response){
     response.render("index"); 
 }); 
 
+async function insertOp(name) {
+    const op = {name: name}
+    try {
+        await client.connect();
+        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(op);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+}
+
 app.use(bodyParser.urlencoded({extended:false})); // for getting variables from form
 app.post("/confirm", async (request, response) => {
     const variables = {
@@ -40,14 +52,7 @@ app.post("/confirm", async (request, response) => {
     let {ops} = request.body;
     console.log("operator got: " + ops);
     variables.name = ops;
-    try {
-        await client.connect();
-        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(variables);
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
+    insertOp(ops);
 
     response.render("confirm", variables);
 })

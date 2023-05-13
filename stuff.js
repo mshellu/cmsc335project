@@ -32,15 +32,18 @@ app.get("/", function(request, response){
 }); 
 
 async function insertOp(client, databaseAndCollection, name) {
-    //let op = {name: name}
-    //try {
-        //await client.connect();
+    let op = {name: name}
+    console.log("op is " + name);
+    try {
+        await client.connect();
+        console.log("client connected");
         const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(name);
-    /*} catch (e) {
+        console.log("finished adding to database, result is " + result);
+        } catch (e) {
         console.error(e);
     } finally {
         await client.close();
-    }*/
+    }
 }
 
 app.use(bodyParser.urlencoded({extended:false})); // for getting variables from form
@@ -50,17 +53,10 @@ app.post("/confirm", async(request, response) => {
     }
 
     let {ops} = request.body;
-    try{
-      client.connect();
-      let operator = {name: ops};
-      await insertOp(client,databaseAndCollection,operator);
-    }catch(e){
-      console.error(e);
-    }
     console.log("operator got: " + ops);
     variables.name = ops;
-    //await insertOp(client,databaseAndCollection,ops);
-
+    await insertOp(client,databaseAndCollection,ops);
+    
     response.render("confirm", variables);
 })
 

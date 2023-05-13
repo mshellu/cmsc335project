@@ -32,7 +32,7 @@ app.get("/", function(request, response){
 }); 
 
 app.use(bodyParser.urlencoded({extended:false})); // for getting variables from form
-app.post("/confirm", (request, response) => {
+app.post("/confirm", async (request, response) => {
     const variables = {
         name: ""
     }
@@ -40,6 +40,15 @@ app.post("/confirm", (request, response) => {
     let {ops} = request.body;
     console.log("operator got: " + ops);
     variables.name = ops;
+    try {
+        await client.connect();
+        const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(variables);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+
     response.render("confirm", variables);
 })
 

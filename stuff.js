@@ -44,15 +44,22 @@ async function insertOp(client, databaseAndCollection, name) {
 }
 
 app.use(bodyParser.urlencoded({extended:false})); // for getting variables from form
-app.post("/confirm", (request, response) => {
+app.post("/confirm", async(request, response) => {
     const variables = {
         name: ""
     }
 
     let {ops} = request.body;
+    try{
+      client.connect();
+      let operator = {name: ops};
+      await insertOp(client,databaseAndCollection,operator);
+    }catch(e){
+      console.error(e);
+    }
     console.log("operator got: " + ops);
     variables.name = ops;
-    insertOp(client,databaseAndCollection,ops);
+    //await insertOp(client,databaseAndCollection,ops);
 
     response.render("confirm", variables);
 })

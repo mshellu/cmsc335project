@@ -85,7 +85,7 @@ app.get("/sum", async (request, response) => {
     }
     let result = await getSum(client, databaseAndCollection);
     result.forEach(elem => {
-        total += elem.block;
+        variables.total += elem.block;
     });
     
     response.render("sum", variables);

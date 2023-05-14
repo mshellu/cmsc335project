@@ -87,7 +87,7 @@ app.get("/sum", async (request, response) => {
         total += elem.block;
     });
     
-    render(response, variables);
+    response.render("sum", variables);
 })
 
 app.listen(portNumber);

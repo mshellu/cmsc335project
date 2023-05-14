@@ -83,7 +83,7 @@ app.get("/sum", async (request, response) => {
         total: 0
     }
     let result = await getSum(client, databaseAndCollection);
-    result.foreach(elem => {
+    result.forEach(elem => {
         total += elem.block;
     });
     

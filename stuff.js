@@ -20,7 +20,7 @@ async function postJSON(name) {
     try {
       const response = await fetch("https://rhodesapi.up.railway.app/api/operator/"+name);
       const result = await response.json();
-      return result.statistics.e2max.block;
+      return parseInt(result.statistics.e2max.block);
       process.exit(0);
     } catch (error) {
       console.error("Error:", error);

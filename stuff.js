@@ -70,7 +70,7 @@ async function getSum(client, databaseAndCollection) {
         .collection(databaseAndCollection.collection)
         .find(filter);
         result = await cursor.toArray();
-        console.log(result);
+        //console.log(result);
     } catch (e) {
         console.error(e);
     } finally {
@@ -90,6 +90,40 @@ app.get("/sum", async (request, response) => {
     
     response.render("sum", variables);
 })
+
+app.get("/clear", (request, response) => {
+    response.render("clear");
+});
+
+async function clearCollection(callback) {
+    let count = 0;
+    try {
+        await client.connect();
+        const result = await client.db(databaseAndCollection.db)
+        .collection(databaseAndCollection.collection)
+        .deleteMany({});
+        count = result.deletedCount;
+    } catch (e) {
+        console.error(e);
+        callback(new Error("error"), count);
+    } finally {
+        await client.close();
+        callback(null, count);
+    }
+}
+
+app.post("/processClear", (request, response) => {
+    const variables = {
+        number: 0
+    }
+    clearCollection((error, result) => {
+        if (!error) {
+            variables.number = result;
+            response.render("processClear", variables);
+        }
+    });
+    
+});
 
 app.listen(portNumber);
 

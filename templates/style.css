@@ -1,6 +1,6 @@
 html{
     font-family: sans-serif;
-    background-image: url("manywdances.gif") center;
+    background-image: url("manywdances.gif");
     background-size: contain;
     height:100%;
     overflow:hidden;

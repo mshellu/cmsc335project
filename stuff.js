@@ -16,11 +16,11 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
 
-async function postJSON() {
+async function postJSON(name) {
     try {
-      const response = await fetch("https://rhodesapi.up.railway.app/api/operator/Texas");
+      const response = await fetch("https://rhodesapi.up.railway.app/api/operator/"+name);
       const result = await response.json();
-      console.log("Success:", result);
+      return result.statistics.e2max.block;
       process.exit(0);
     } catch (error) {
       console.error("Error:", error);
@@ -32,8 +32,8 @@ app.get("/", function(request, response){
 }); 
 
 async function insertOp(client, databaseAndCollection, name) {
-    const apithings = await fetch("https://rhodesapi.up.railway.app/api/operator/"+name);
-    let op = {name: name, block: apithings.statistics.e2max.block}
+    const apithings = await postJSON(name);
+    let op = {name: name, block: apithings}
     console.log("op is " + name);
     try {
         await client.connect();

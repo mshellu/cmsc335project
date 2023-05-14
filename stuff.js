@@ -32,8 +32,8 @@ app.get("/", function(request, response){
 }); 
 
 async function insertOp(client, databaseAndCollection, name) {
-    const apithings = await postJSON(name);
-    let op = {name: name, block: apithings}
+    let blk = await postJSON(name);
+    let op = {name: name, block: blk}
     console.log("op is " + name);
     try {
         await client.connect();

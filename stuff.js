@@ -21,7 +21,6 @@ async function postJSON(name) {
       const response = await fetch("https://rhodesapi.up.railway.app/api/operator/"+name);
       const result = await response.json();
       return parseInt(result.statistics.e2max.block);
-      process.exit(0);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -40,7 +39,7 @@ async function insertOp(client, databaseAndCollection, name) {
         console.log("client connected");
         const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(op);
         console.log("finished adding to database, result is " + result);
-        } catch (e) {
+    } catch (e) {
         console.error(e);
     } finally {
         await client.close();
@@ -61,6 +60,35 @@ app.post("/confirm", async(request, response) => {
     response.render("confirm", variables);
 })
 
+async function getSum(client, databaseAndCollection) {
+    try {
+        await client.connect();
+        let filter = {};
+        const cursor = client.db(databaseAndCollection.db)
+        .collection(databaseAndCollection.collection)
+        .find(filter);
+        
+        const result = await cursor.toArray();
+        console.log(result);
+        return result;
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+}
+
+app.get("/sum", async (request, response) => {
+    const variables = {
+        total: 0
+    }
+    let result = await getSum(client, databaseAndCollection);
+    result.foreach(elem => {
+        total += elem.block;
+    });
+    
+    render(response, variables);
+})
 
 app.listen(portNumber);
 

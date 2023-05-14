@@ -61,20 +61,20 @@ app.post("/confirm", async(request, response) => {
 })
 
 async function getSum(client, databaseAndCollection) {
+    let result = [];
     try {
         await client.connect();
         let filter = {};
         const cursor = client.db(databaseAndCollection.db)
         .collection(databaseAndCollection.collection)
         .find(filter);
-        
-        const result = await cursor.toArray();
+        result = await cursor.toArray();
         console.log(result);
-        return result;
     } catch (e) {
         console.error(e);
     } finally {
         await client.close();
+        return result;
     }
 }
 

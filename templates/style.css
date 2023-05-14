@@ -1,11 +1,7 @@
 html{
     font-family: sans-serif;
-    background-image: url("manywdances.gif");
+    background-image: url("manywdances.gif") center;
     background-size: contain;
     height:100%;
     overflow:hidden;
-}
-
-body{
-    background-image: url("kelsey.jpg");
 }

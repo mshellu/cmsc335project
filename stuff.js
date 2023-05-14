@@ -21,7 +21,7 @@ async function postJSON() {
       const response = await fetch("https://rhodesapi.up.railway.app/api/operator/Texas");
       const result = await response.json();
       console.log("Success:", result);
-      process.exit(0)
+      process.exit(0);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -32,7 +32,8 @@ app.get("/", function(request, response){
 }); 
 
 async function insertOp(client, databaseAndCollection, name) {
-    let op = {name: name}
+    const apithings = await fetch("https://rhodesapi.up.railway.app/api/operator/"+name);
+    let op = {name: name, block: apithings.statistics.e2max.block}
     console.log("op is " + name);
     try {
         await client.connect();

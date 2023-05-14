@@ -15,6 +15,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + '/templates'));
 
 async function postJSON(name) {
     try {
